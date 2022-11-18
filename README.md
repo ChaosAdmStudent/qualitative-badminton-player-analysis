@@ -18,14 +18,19 @@ The task here is to detect the boundaries of the court to get the court corner c
 
 2. **Drawing Hough Lines**: Next, Hough Lines are drawn over all the edges. The vertical and horizontal ones are filtered and we craft a function to extract the lines we need using length of the lines as the constraint. This is the parameter that has to be tweaked for a new tournament match in order to extract the border lines for new tournament matches. 
 
-![Boundary Lines](https://user-images.githubusercontent.com/53689018/202634282-2b7ee279-0fa7-4529-89c4-9ba711b8a1db.png)
-
+<p align="center"> 
+  <img src="https://user-images.githubusercontent.com/53689018/202634282-2b7ee279-0fa7-4529-89c4-9ba711b8a1db.png" width="500">
+</p> 
+  
 3. **Finding Intersection of Boundary Lines**: Using determinants, all the intersection points of the filtered lines are found out. 
 
-![All Intersection Points](https://user-images.githubusercontent.com/53689018/202634363-9f669a53-6b5e-4ff1-89d0-41c729bae77c.png)
-
+<p align="center"> 
+  <img src="https://user-images.githubusercontent.com/53689018/202634363-9f669a53-6b5e-4ff1-89d0-41c729bae77c.png" width="500")
+</p>  
+       
 4. **Grouping points together**: Lastly, K-Means clustering is done to form 4 clusters for the 4 corners of the court. This is done to address the issue of multiple overlapping boundary lines which passed through the aforementioned Hough Lines filter. 
 
-![Clustered Corner Points](https://user-images.githubusercontent.com/53689018/202634418-2c7a6db5-e75f-4800-9579-e43291753680.png)
-
+<p align = "center">
+  <img src="https://user-images.githubusercontent.com/53689018/202634418-2c7a6db5-e75f-4800-9579-e43291753680.png" width ="500")
+</p>
 
