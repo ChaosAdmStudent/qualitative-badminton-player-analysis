@@ -34,3 +34,9 @@ The task here is to detect the boundaries of the court to get the court corner c
   <img src="https://user-images.githubusercontent.com/53689018/202634418-2c7a6db5-e75f-4800-9579-e43291753680.png" width ="500")
 </p>
 
+## Player Detection 
+
+It is crucial to detect the player positions on the court as it's one of the most important parameters for predicting shot direction in most cases. For this purpose, we tried using three methods for object detection: 
+- Particle Filter (Best trade off between speed and accuracy) 
+- YoloV3 (Very accurate, but very slow)  
+- Video Frame Difference (Detecting the smallest of movements, even outside the court) 
