@@ -1,6 +1,6 @@
 # Badminton Shot Prediction
 
-**Status:** On-Going
+> **Status:** On-Going
 
 In this group project carried out with Anannya Popat (@Anannyap7), the aim is to take a professional badminton match video as an input and predict the most probable space on the court where the shot will be hit by the player on the near side of the court. This is done by considering the positions of the players relative to each other and their body pose at the point-of-contact with the shuttle. Efficient use of Computer Vision ensures that this model is immune to subtle camera angle changes that are prominent across different tournaments with slight change of parameters in the setup stage. (More on this in the process explanation further!)
 
