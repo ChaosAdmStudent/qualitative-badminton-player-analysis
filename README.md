@@ -83,4 +83,4 @@ We tried two approaches here:
 
 1. **Sound Event Detection:** Hardly picked up 50 timestamps in a 7 minute gameplay video, some of which were even part of replay frames [Refer to branch "ChaosAdmStudent-patch-2"] 
 
-2. **Convolutional Neural Networks:** This is an on-going approach where the idea is to manually annotate some timeframes from the match with labels signifying a "hit" or "non" hit frame. 
+2. **Convolutional Neural Networks:** This is an on-going approach where the idea is to manually annotate some timeframes from the match with labels signifying a "hit" or "non" hit frame. This is done by converting the audio snippets of the manually annotated timestamps into spectrograms which are then passed into the model for classification purpose.
