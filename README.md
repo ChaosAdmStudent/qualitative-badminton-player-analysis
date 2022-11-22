@@ -81,6 +81,6 @@ Next, it is very important to collect the timestamps where the player is hitting
 
 We tried two approaches here: 
 
-1. **Sound Event Detection:** Hardly picked up 50 timestamps in a 7 minute gameplay video, some of which were even part of replay frames [Refer to branch "sound-event-detection"] 
+1. **Sound Event Detection:** Hardly picked up 50 timestamps in a 7 minute gameplay video, some of which were even part of replay frames [Refer to branch "ChaosAdmStudent patch-2"] 
 
 2. **Convolutional Neural Networks:** This is an on-going approach where the idea is to manually annotate some timeframes from the match with labels signifying a "hit" or "non" hit frame. 
