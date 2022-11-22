@@ -70,3 +70,7 @@ We won't be talking about how this algorithm works, but rather the configuration
 - For each frame in the video, draw pure black lines on the vertical court boundaries to avoid particles from converging on the court boundaries in case the player jersey color is similar to that of the court boundaries. 
 
 - For each frame, check if that frame id has been identified as a replay frame (done in section 2.2). If yes, re-initialize particles and pause object tracking till a "play" frame is encountered again. 
+
+<p align ="center">
+  <img src="https://github.com/ChaosAdmStudent/badminton-shot-prediction/blob/main/demos/ParticleFilterDemo.gif" width = "800">
+</p>
