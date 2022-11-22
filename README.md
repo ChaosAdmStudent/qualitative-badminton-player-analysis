@@ -10,7 +10,7 @@ The inspiration for the project stems from my deep interest in badminton. Unfort
 
 # Process Walkthrough 
 
-## Court Line Detection 
+## 1. Court Line Detection 
 
 The task here is to detect the boundaries of the court to get the court corner coordinates. This is required so that all the processing and prediction going forward is with respect to relative positions of the players on the court, and not the frame. This is required because the differences in camera angles across different tournaments will change the players' position even if they are standing at the exact same position on the court, which is bound to give inaccurate results. 
 
@@ -34,9 +34,36 @@ The task here is to detect the boundaries of the court to get the court corner c
   <img src="https://user-images.githubusercontent.com/53689018/202634418-2c7a6db5-e75f-4800-9579-e43291753680.png" width ="500")
 </p>
 
-## Player Detection 
+## 2. Player Detection 
 
 It is crucial to detect the player positions on the court as it's one of the most important parameters for predicting shot direction in most cases. For this purpose, we tried using three methods for object detection: 
 - Particle Filter (Best trade off between speed and accuracy) 
 - YoloV3 (Very accurate, but very slow)  
-- Video Frame Difference (Detecting the smallest of movements, even outside the court) 
+- Video Frame Difference (Detecting the smallest of movements, even outside the court)  
+
+### 2.1 Automatic Color Detection 
+
+Particle Filter works by tracking RGB values of a target pixel. To ensure that the script picks up the target color for any particular match, we automated the color detection of the target by the following means: 
+
+- Took separate frames of top and bottom half of the court to get information for top and bottom player separately
+- Masked the outer regions of the court using the court boundary coordinates 
+- Extracted most widely used colors in the two sub-frames extracted and filtered out black (the region outside the court) and green (the color of the court mat) 
+
+<p align = "center">
+  <img src="https://user-images.githubusercontent.com/53689018/203215591-b1cdfbb7-8997-4f14-8b2a-c5072c8b6cb8.png" width="600">
+</p>  
+
+### 2.2 Replay Detection using CNN 
+
+While making our particle filter script, we noticed the script completely crashing whenever a close-up replay frame was encountered. We're also only interested in the over-the-court camera angle rather than the close-ups. For this purpose, we developed a CNN model to classify a frame into a "play" or "non" play frame. The frame IDs for a non-play frame are stored in a textfile which is referenced by the algorithm in section 2.3. 
+
+### 2.3 Particle Filter 
+
+We won't be talking about how this algorithm works, but rather the configuration unique to our implementation used for particle filter: 
+
+- Two sets of particles, one for each player 
+- Particles for bottom player spread out in the trapezium-like shape (as seen in the image in the previous section), while particles for upper player spread out in a rectangular region extending slightly outside the court (because the actual body of the player appears outside the court coordinates) 
+
+- For each frame in the video, draw pure black lines on the vertical court boundaries to avoid particles from converging on the court boundaries in case the player jersey color is similar to that of the court boundaries. 
+
+- For each frame, check if that frame id has been identified as a replay frame (done in section 2.2). If yes, re-initialize particles and stop object tracking. 
