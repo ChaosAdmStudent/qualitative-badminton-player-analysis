@@ -73,4 +73,14 @@ We won't be talking about how this algorithm works, but rather the configuration
 
 <p align ="center">
   <img src="https://github.com/ChaosAdmStudent/badminton-shot-prediction/blob/main/demos/ParticleFilterDemo.gif" width = "800">
-</p>
+</p> 
+
+## 3. Point-Of-Contact Frame Collection 
+
+Next, it is very important to collect the timestamps where the player is hitting the shuttle because these are the decision points where a decision will be made by the model. We don't want the model to take every frame in consideration, and rather only a sequence of about 20 frames before impact to predict the shot direction. 
+
+We tried two approaches here: 
+
+1. **Sound Event Detection:** Hardly picked up 50 timestamps in a 7 minute gameplay video, some of which were even part of replay frames [Refer to branch "sound-event-detection"] 
+
+2. **Convolutional Neural Networks:** This is an on-going approach where the idea is to manually annotate some timeframes from the match with labels signifying a "hit" or "non" hit frame. 
