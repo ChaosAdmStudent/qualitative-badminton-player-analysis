@@ -47,7 +47,7 @@ Particle Filter works by tracking RGB values of a target pixel. To ensure that t
 
 - Took separate frames of top and bottom half of the court to get information for top and bottom player separately
 - Masked the outer regions of the court using the court boundary coordinates 
-- Extracted most widely used colors in the two sub-frames extracted and filtered out black (the region outside the court) and green (the color of the court mat) 
+- Extracted most widely used colors in the two sub-frames extracted and filtered out black (the region outside the court), green (the color of the court mat) and the court boundary color. 
 
 <p align = "center">
   <img src="https://user-images.githubusercontent.com/53689018/203215591-b1cdfbb7-8997-4f14-8b2a-c5072c8b6cb8.png" width="600">
