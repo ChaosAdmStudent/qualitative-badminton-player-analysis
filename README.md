@@ -39,7 +39,7 @@ The task here is to detect the boundaries of the court to get the court corner c
 
 ## 2. Player Detection 
 
-It is crucial to detect the player positions on the court as it's one of the most important parameters for predicting shot direction in most cases. For this purpose, we tried using three methods for object detection: 
+It is crucial to detect the player positions on the court as it's one of the most important parameters for predicting shot direction (if we plan to implement it in the future) in most cases. For this purpose, we tried using three methods for object detection: 
 - Particle Filter (Best trade off between speed and accuracy) 
 - YoloV3 (Very accurate, but very slow)  
 - Video Frame Difference (Detecting the smallest of movements, even outside the court)  
@@ -58,7 +58,12 @@ Particle Filter works by tracking RGB values of a target pixel. To ensure that t
 
 ### 2.2 Replay Detection using CNN 
 
-While making our particle filter script, we noticed the script completely crashing whenever a close-up replay frame was encountered. We're also only interested in the over-the-court camera angle rather than the close-ups. For this purpose, we developed a CNN model to classify a frame into a "play" or "non" play frame. The frame IDs for a non-play frame are stored in a textfile which is referenced by the algorithm in section 2.3. 
+While making our particle filter script, we noticed the script completely crashing whenever a close-up replay frame was encountered. We're also only interested in the over-the-court camera angle rather than the close-ups. For this purpose, we developed a CNN model to classify a frame into a "play" or "non" play frame. The frame IDs for a non-play frame are stored in a textfile which is referenced by the algorithm in section 2.3. Figures below show "non-play" and "play" frames.
+
+<p align ="center">
+  <img src="https://github.com/ChaosAdmStudent/badminton-shot-prediction/assets/59221653/65ceb0b4-d37a-4bc0-8097-8457026f19d7" width = "300">
+  <img src="https://github.com/ChaosAdmStudent/badminton-shot-prediction/assets/59221653/83fd11e9-afee-49e2-8211-1b651a9f6fc7" width = "300">
+</p> 
 
 ### 2.3 Particle Filter 
 
@@ -75,12 +80,28 @@ We won't be talking about how this algorithm works, but rather the configuration
   <img src="https://github.com/ChaosAdmStudent/badminton-shot-prediction/blob/main/demos/ParticleFilterDemo.gif" width = "800">
 </p> 
 
-## 3. Point-Of-Contact Frame Collection 
+## 3. Player Stroke Detection 
 
-Next, it is very important to collect the timestamps where the player is hitting the shuttle because these are the decision points where a decision will be made by the model. We don't want the model to take every frame in consideration, and rather only a sequence of about 20 frames before impact to predict the shot direction. 
+Another important component of this project is to predict the kind of stroke/shot played by the players. Here, we have considered 3 primary types of shots for demonstration purposes, namely, 'net-drop return', 'smash' and 'defense'. In order to predict these shots, we have manually collected the training data by extracting the frames where these shots occur and labeling them. After this, the training data is passed through a multi-class classifier and a stroke detection is made using an Artificial Neural Network model like CNN. The **accuracy** of this model is currently around **81%**, which can be improved upon by expanding the dataset manually.
 
-We tried two approaches here: 
+Convolutional Neural Networks architecture of the proposed system is given below:
 
-1. **Sound Event Detection:** Hardly picked up 50 timestamps in a 7 minute gameplay video, some of which were even part of replay frames [Refer to branch "ChaosAdmStudent-patch-2"] 
+<p align = "center">
+  <img src = "https://github.com/ChaosAdmStudent/badminton-shot-prediction/assets/59221653/d86df4bb-b3c1-4ee7-b58b-147eb3f7af71">
+</p>
 
-2. **Convolutional Neural Networks:** This is an on-going approach where the idea is to manually annotate some timeframes from the match with labels signifying a "hit" or "non" hit frame. This is done by converting the audio snippets of the manually annotated timestamps into spectrograms which are then passed into the model for classification purpose.
+The types of strokes predicted (net-drop return, smash and defense) using the proposed CNN model are as follows:
+
+<p align ="center">
+  <img src="https://github.com/ChaosAdmStudent/badminton-shot-prediction/assets/59221653/a18bddd4-56fd-4712-97f1-35efbb7e0439">
+  <img src="https://github.com/ChaosAdmStudent/badminton-shot-prediction/assets/59221653/cc72d972-4299-4652-8ba5-9424f6c9b2e3">
+  <img src="https://github.com/ChaosAdmStudent/badminton-shot-prediction/assets/59221653/d6352f6a-07c8-4ef2-acc8-4b1d3f89fb07">
+</p> 
+
+## 4. Player Pose Estimation using OpenPose library 
+
+Here, 19 individual body parts along with their paired connections are defined. Then a predefined tensorflow model is used to train on the input image and generate a graph of lines and points to indicate each joint connection. The image below demonstrates the same.
+
+<p align = "center">
+  <img src = "https://github.com/ChaosAdmStudent/badminton-shot-prediction/assets/59221653/4d0464af-7257-44d1-b941-7dc6311ebcd3">
+</p>
