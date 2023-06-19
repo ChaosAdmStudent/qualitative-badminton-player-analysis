@@ -1,0 +1,1 @@
+This folder contains 201 processed, resized and gray-scaled images of different player strokes (net-drop return, defense and smash).
