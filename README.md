@@ -1,4 +1,4 @@
-# Badminton Shot Prediction
+# Qualitative Badminton Player Analysis
 
 > **Status:** Completed
 
